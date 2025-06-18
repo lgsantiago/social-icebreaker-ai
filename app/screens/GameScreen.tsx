@@ -52,7 +52,7 @@ const GameScreen: FC = () => {
         variant="headlineMedium"
         style={{ marginBottom: 12, textAlign: "center" }}
       >
-        🕵️ Ready to Break the Ice?
+        Ready to Break the Ice?
       </Text>
       <Text
         variant="bodyMedium"

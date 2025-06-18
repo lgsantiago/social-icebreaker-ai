@@ -9,7 +9,6 @@ import {
   View,
 } from "react-native";
 import { Button, Chip, Surface, Text, TextInput } from "react-native-paper";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Props = {
   navigation: NativeStackNavigationProp<any>;
@@ -21,7 +20,7 @@ const TOPIC_OPTIONS = [
   "Party",
   "Work",
   "Family",
-  "Spicy",
+  "Sexy",
   "Philosophical",
   "Funnny",
 ];
@@ -30,7 +29,6 @@ const SetupScreen: FC<Props> = ({ navigation }) => {
   const [participants, setParticipants] = useState<string[]>([]);
   const [nameInput, setNameInput] = useState("");
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
-  const insets = useSafeAreaInsets();
 
   const addParticipant = () => {
     if (nameInput.trim()) {
@@ -55,10 +53,8 @@ const SetupScreen: FC<Props> = ({ navigation }) => {
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
         >
-          <Text style={styles.stepper}>Step 1 of 2</Text>
-
           <Text variant="headlineMedium" style={styles.title}>
-            🧑‍🤝‍🧑 Who&apos;s Playing?
+            Who&apos;s Playing?
           </Text>
 
           <TextInput
@@ -100,25 +96,27 @@ const SetupScreen: FC<Props> = ({ navigation }) => {
               </Chip>
             ))}
           </View>
-        </ScrollView>
 
-        <View style={[styles.buttonContainer, { bottom: 80 + insets.bottom }]}>
-          <Button
-            mode="contained"
-            buttonColor="#6B4EFF"
-            contentStyle={{ paddingHorizontal: 32, paddingVertical: 8 }}
-            style={{ borderRadius: 12 }}
-            onPress={() =>
-              navigation.navigate("Game", {
-                participants,
-                topics: selectedTopics,
-              })
-            }
-            disabled={participants.length === 0 || selectedTopics.length === 0}
-          >
-            🚀 Continue
-          </Button>
-        </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              mode="contained"
+              buttonColor="#6B4EFF"
+              contentStyle={{ paddingHorizontal: 32, paddingVertical: 10 }}
+              style={{ borderRadius: 12 }}
+              onPress={() =>
+                navigation.navigate("Game", {
+                  participants,
+                  topics: selectedTopics,
+                })
+              }
+              disabled={
+                participants.length === 0 || selectedTopics.length === 0
+              }
+            >
+              Continue
+            </Button>
+          </View>
+        </ScrollView>
       </Surface>
     </KeyboardAvoidingView>
   );
@@ -163,10 +161,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#D6CCFF",
   },
   buttonContainer: {
-    position: "absolute",
-    bottom: 20,
-    left: 24,
-    right: 24,
     alignItems: "center",
   },
 });

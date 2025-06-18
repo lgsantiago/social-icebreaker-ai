@@ -10,8 +10,40 @@ if (!apiKey) {
 }
 
 const openai = new OpenAI({ apiKey });
+const API_ENDPOINT =
+  "https://social-icebraker-81n4eg9qw-lgsantiagos-projects.vercel.app/api/generate-question";
 
 export async function generateIcebreakerQuestion(
+  participant: string,
+  topics: string[] = []
+): Promise<string> {
+  try {
+    // Try the REST API first
+    const response = await fetch(API_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        participant,
+        topics: topics.join(", ") || "any topic",
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("REST API request failed");
+    }
+
+    const data = await response.json();
+    return data.question;
+  } catch (error) {
+    console.warn("Falling back to OpenAI implementation:", error);
+    return generateIcebreakerQuestionWithOpenAI(participant, topics);
+  }
+}
+
+// Keep the original implementation as a fallback
+async function generateIcebreakerQuestionWithOpenAI(
   participant: string,
   topics: string[] = []
 ): Promise<string> {
