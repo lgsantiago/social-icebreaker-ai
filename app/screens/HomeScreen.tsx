@@ -16,7 +16,7 @@ const HomeScreen: FC<Props> = ({ navigation }) => {
         justifyContent: "center",
         alignItems: "center",
         padding: 24,
-        backgroundColor: "#F5F3FF", // Soft lavender vibe
+        backgroundColor: "#F5F3FF",
       }}
     >
       <Image

@@ -33,7 +33,7 @@ const GameScreen: FC = () => {
       );
       setQuestion(generatedQuestion);
     } catch (err: any) {
-      setError("Failed to generate question. Please try again.");
+      setError("Generation attempts exceeded. Please try again later.");
     }
     setLoading(false);
   };
@@ -45,7 +45,7 @@ const GameScreen: FC = () => {
         justifyContent: "center",
         alignItems: "center",
         padding: 24,
-        backgroundColor: "#F5F3FF", // Lavender background
+        backgroundColor: "#F5F3FF",
       }}
     >
       <Text
