@@ -3,6 +3,9 @@ import OpenAI from "openai";
 const apiKey =
   process.env.EXPO_PUBLIC_OPENAI_API_KEY || process.env.OPENAI_API_KEY;
 
+const apiEndpoint =
+  process.env.EXPO_PUBLIC_API_ENDPOINT || "https://default-endpoint.com/api";
+
 if (!apiKey) {
   throw new Error(
     "OpenAI API key is not set. Please set EXPO_PUBLIC_OPENAI_API_KEY or OPENAI_API_KEY."
@@ -10,16 +13,13 @@ if (!apiKey) {
 }
 
 const openai = new OpenAI({ apiKey });
-const API_ENDPOINT =
-  "https://social-icebraker-81n4eg9qw-lgsantiagos-projects.vercel.app/api/generate-question";
 
 export async function generateIcebreakerQuestion(
   participant: string,
   topics: string[] = []
 ): Promise<string> {
   try {
-    // Try the REST API first
-    const response = await fetch(API_ENDPOINT, {
+    const response = await fetch(apiEndpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
