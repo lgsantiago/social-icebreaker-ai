@@ -20,7 +20,6 @@ const TOPIC_OPTIONS = [
   "Party",
   "Work",
   "Family",
-  "Sexy",
   "Philosophical",
   "Funnny",
 ];
