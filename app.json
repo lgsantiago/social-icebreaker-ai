@@ -8,11 +8,26 @@
     "scheme": "socialicebreakerai",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "jsEngine": "hermes",
     "ios": {
+      "supportsTablet": true,
       "bundleIdentifier": "com.santisrepo.brainspy",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": false,
+          "NSExceptionDomains": {
+            "api.openai.com": {
+              "NSExceptionAllowsInsecureHTTPLoads": false,
+              "NSExceptionMinimumTLSVersion": "1.2"
+            }
+          }
+        }
+      }
     },
     "android": {
+      "edgeToEdgeEnabled": true,
       "package": "com.santisrepo.brainspy",
       "versionCode": 1
     },
@@ -29,7 +44,7 @@
           "image": "./assets/images/spy-brain.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#F2E7FF"
         }
       ],
       "expo-web-browser"

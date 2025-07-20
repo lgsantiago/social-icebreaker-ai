@@ -21,7 +21,7 @@ const HomeScreen: FC<Props> = ({ navigation }) => {
     >
       <Image
         source={require("../../assets/images/spy-brain.png")}
-        style={{ width: 200, height: 200, marginBottom: 32 }}
+        style={{ width: 200, height: 200, marginBottom: 32, borderRadius: 24 }}
         resizeMode="contain"
       />
 

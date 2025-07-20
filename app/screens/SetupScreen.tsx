@@ -2,10 +2,12 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { FC } from "react";
 import React, { useState } from "react";
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { Button, Chip, Surface, Text, TextInput } from "react-native-paper";
@@ -47,76 +49,79 @@ const SetupScreen: FC<Props> = ({ navigation }) => {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
-      <Surface style={styles.container}>
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
-        >
-          <Text variant="headlineMedium" style={styles.title}>
-            Who&apos;s Playing?
-          </Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <Surface style={styles.container}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            <Text variant="headlineMedium" style={styles.title}>
+              Who&apos;s Playing?
+            </Text>
 
-          <TextInput
-            label="Add Participant"
-            mode="outlined"
-            value={nameInput}
-            onChangeText={setNameInput}
-            onSubmitEditing={addParticipant}
-            returnKeyType="done"
-            right={<TextInput.Icon icon="plus" onPress={addParticipant} />}
-            style={styles.input}
-          />
+            <TextInput
+              label="Add Participant"
+              mode="outlined"
+              value={nameInput}
+              onChangeText={setNameInput}
+              onSubmitEditing={addParticipant}
+              returnKeyType="done"
+              right={<TextInput.Icon icon="plus" onPress={addParticipant} />}
+              style={styles.input}
+            />
 
-          <View style={styles.chipGroup}>
-            {participants.map((name, idx) => (
-              <Chip key={idx} mode="flat" style={styles.chip}>
-                {name}
-              </Chip>
-            ))}
-          </View>
+            <View style={styles.chipGroup}>
+              {participants.map((name, idx) => (
+                <Chip key={idx} mode="flat" style={styles.chip}>
+                  {name}
+                </Chip>
+              ))}
+            </View>
 
-          <Text variant="headlineMedium" style={styles.title}>
-            🎯 Select Topics
-          </Text>
+            <Text variant="headlineMedium" style={styles.title}>
+              🎯 Select Topics
+            </Text>
 
-          <View style={styles.chipGroup}>
-            {TOPIC_OPTIONS.map((topic) => (
-              <Chip
-                key={topic}
-                mode="outlined"
-                style={[
-                  styles.chip,
-                  selectedTopics.includes(topic) && styles.chipSelected,
-                ]}
-                selected={selectedTopics.includes(topic)}
-                onPress={() => toggleTopic(topic)}
+            <View style={styles.chipGroup}>
+              {TOPIC_OPTIONS.map((topic) => (
+                <Chip
+                  key={topic}
+                  mode="outlined"
+                  style={[
+                    styles.chip,
+                    selectedTopics.includes(topic) && styles.chipSelected,
+                  ]}
+                  selected={selectedTopics.includes(topic)}
+                  onPress={() => toggleTopic(topic)}
+                >
+                  {topic}
+                </Chip>
+              ))}
+            </View>
+
+            <View style={styles.buttonContainer}>
+              <Button
+                mode="contained"
+                buttonColor="#6B4EFF"
+                contentStyle={{ paddingHorizontal: 32, paddingVertical: 10 }}
+                style={{ borderRadius: 12 }}
+                onPress={() =>
+                  navigation.navigate("Game", {
+                    participants,
+                    topics: selectedTopics,
+                  })
+                }
+                disabled={
+                  participants.length === 0 || selectedTopics.length === 0
+                }
               >
-                {topic}
-              </Chip>
-            ))}
-          </View>
-
-          <View style={styles.buttonContainer}>
-            <Button
-              mode="contained"
-              buttonColor="#6B4EFF"
-              contentStyle={{ paddingHorizontal: 32, paddingVertical: 10 }}
-              style={{ borderRadius: 12 }}
-              onPress={() =>
-                navigation.navigate("Game", {
-                  participants,
-                  topics: selectedTopics,
-                })
-              }
-              disabled={
-                participants.length === 0 || selectedTopics.length === 0
-              }
-            >
-              Continue
-            </Button>
-          </View>
-        </ScrollView>
-      </Surface>
+                Continue
+              </Button>
+            </View>
+          </ScrollView>
+        </Surface>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };

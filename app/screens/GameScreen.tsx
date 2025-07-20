@@ -19,23 +19,43 @@ const GameScreen: FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleBreakTheIce = async () => {
+    if (participants.length === 0) {
+      setError(
+        "No participants available. Please go back and add participants."
+      );
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setQuestion(null);
-    // Pick a random participant
-    const participant =
-      participants[Math.floor(Math.random() * participants.length)];
-    setSelectedParticipant(participant);
+
     try {
+      // Pick a random participant
+      const participant =
+        participants[Math.floor(Math.random() * participants.length)];
+      setSelectedParticipant(participant);
+
       const generatedQuestion = await generateIcebreakerQuestion(
         participant,
         topics
       );
-      setQuestion(generatedQuestion);
+
+      if (
+        generatedQuestion &&
+        typeof generatedQuestion === "string" &&
+        generatedQuestion.trim()
+      ) {
+        setQuestion(generatedQuestion.trim());
+      } else {
+        throw new Error("Invalid question generated");
+      }
     } catch (err: any) {
+      console.error("Error generating question:", err);
       setError("Generation attempts exceeded. Please try again later.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
