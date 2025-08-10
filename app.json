@@ -24,7 +24,8 @@
             }
           }
         }
-      }
+      },
+      "icon": "./assets/images/spy-brain.png"
     },
     "android": {
       "edgeToEdgeEnabled": true,
